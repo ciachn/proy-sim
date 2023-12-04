@@ -1,0 +1,21 @@
+{
+  "name": "proy-simulacion",
+  "version": "1.0.0",
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "prebuild": "shx mkdir -p dist",
+    "build": "pnpm clean && pnpm prebuild && parcel build src/index.html --no-source-maps --public-url ./",
+    "watch": "pnpm prebuild && parcel watch src/index.html --public-url ./",
+    "serve": "parcel serve src/index.html"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@parcel/config-default": "^2.9.3",
+    "@parcel/core": "^2.9.3",
+    "babel-plugin-riza": "^2.0.8",
+    "parcel": "^2.9.3",
+    "riza": "^3.0.15",
+    "shx": "^0.3.4"
+  }
+}
