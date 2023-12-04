@@ -705,16 +705,30 @@ const _$3 = (0, _riza.helpers).create("span", [
 ]);
 const _$4 = (0, _riza.helpers).create("span", [
     "style",
-    "position:absolute; left:16px; top:100px; color:#c0c;"
+    "position:absolute; left:16px; top:90px; color:#c0c;"
 ], [
     "Prom. Espera Entrar: ",
     (0, _riza.helpers).DYNAMIC
 ]);
 const _$5 = (0, _riza.helpers).create("span", [
     "style",
-    "position:absolute; left:16px; top:120px; color:#c0c;"
+    "position:absolute; left:16px; top:110px; color:#c0c;"
 ], [
     "Prom. Espera Salir: ",
+    (0, _riza.helpers).DYNAMIC
+]);
+const _$6 = (0, _riza.helpers).create("span", [
+    "style",
+    "position:absolute; left:16px; top:140px; color:#c0c;"
+], [
+    "Clientes Afuera: ",
+    (0, _riza.helpers).DYNAMIC
+]);
+const _$7 = (0, _riza.helpers).create("span", [
+    "style",
+    "position:absolute; left:16px; top:160px; color:#c0c;"
+], [
+    "Clientes Adentro: ",
     (0, _riza.helpers).DYNAMIC
 ]);
 function prepararSimulacion(ctx) {
@@ -738,6 +752,8 @@ function prepararSimulacion(ctx) {
     const statEsperaExternaN = (0, _riza.signal)(1);
     const statEsperaInternaT = (0, _riza.signal)(0);
     const statEsperaInternaN = (0, _riza.signal)(1);
+    const statAfuera = (0, _riza.signal)(0);
+    const statAdentro = (0, _riza.signal)(0);
     let contadorPersonas = _$1([], [
         _$0([], [
             statPersonas
@@ -774,6 +790,18 @@ function prepararSimulacion(ctx) {
         ])
     ]);
     document.body.append(contadorEsperaInternaT);
+    let contadorAfuera = _$6([], [
+        _$0([], [
+            statAfuera
+        ])
+    ]);
+    document.body.append(contadorAfuera);
+    let contadorAdentro = _$7([], [
+        _$0([], [
+            statAdentro
+        ])
+    ]);
+    document.body.append(contadorAdentro);
     ctx.log.write(C_DEBUG, "Inicio de simulaci\xf3n");
     ctx.canvas.addEventListener("click", ()=>{
         if (!ctx.paused) {
@@ -813,6 +841,8 @@ function prepararSimulacion(ctx) {
         bancoCerrado.visible = 2;
     });
     ctx.interval(1, ()=>{
+        statAfuera.value = colaExterna.length - 1;
+        statAdentro.value = colaInterna.length;
         if (bancoCerrado.visible == 2 && colaExterna.length == 1 && colaInterna.length == 0) {
             ctx.log.write(C_DEBUG, "Fin de simulaci\xf3n");
             ctx.stop();
@@ -909,6 +939,7 @@ function prepararSimulacion(ctx) {
                     persona.remove();
                 });
                 i--;
+                continue;
             }
             // procesamiento completado
             if (persona.process_time <= 0) {
@@ -923,6 +954,7 @@ function prepararSimulacion(ctx) {
                     persona.remove();
                 });
                 i--;
+                continue;
             }
         }
     });
@@ -981,7 +1013,7 @@ function prepararSimulacion(ctx) {
 };
 document.body.appendChild(Simulacion());
 
-},{"riza":"cCAh0","./utils":"en4he","./images":"lLWtd","./persona":"hBGor","./random":"1fE0k","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh","./config":"jtCLN","./guardia":"1KVU2"}],"cCAh0":[function(require,module,exports) {
+},{"riza":"cCAh0","./utils":"en4he","./random":"1fE0k","./config":"jtCLN","./images":"lLWtd","./persona":"hBGor","./guardia":"1KVU2","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh"}],"cCAh0":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Router", ()=>F);
@@ -6796,7 +6828,7 @@ function crearSimulador(canvas, ctx) {
     ctx.log = crearLog(ctx);
 }
 
-},{"riza":"cCAh0","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh","./images":"lLWtd","./config":"jtCLN"}],"lLWtd":[function(require,module,exports) {
+},{"riza":"cCAh0","./images":"lLWtd","./config":"jtCLN","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh"}],"lLWtd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "IMG", ()=>IMG);
@@ -6837,10 +6869,10 @@ const IMG = {
     "person_3": (0, _person3PngDefault.default)
 };
 
-},{"riza":"cCAh0","./img/guard-1.png":"5eDc2","./img/car-1.png":"lOgXO","./img/car-2.png":"fwz6H","./img/car-3.png":"dEDty","./img/car-4.png":"kmvqH","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh","./img/person-1.png":"dpd96","./img/person-2.png":"5gy5h","./img/person-3.png":"fxjfz","./img/clock.png":"5R5id","./img/bank-open.png":"1oVBG","./img/bank-closed.png":"hdolQ"}],"5eDc2":[function(require,module,exports) {
-module.exports = require("1024d9e335ba5425").getBundleURL("gnRNX") + "guard-1.0ec892b3.png" + "?" + Date.now();
+},{"riza":"cCAh0","./img/bank-open.png":"1oVBG","./img/bank-closed.png":"hdolQ","./img/clock.png":"5R5id","./img/guard-1.png":"5eDc2","./img/car-1.png":"lOgXO","./img/car-2.png":"fwz6H","./img/car-3.png":"dEDty","./img/car-4.png":"kmvqH","./img/person-1.png":"dpd96","./img/person-2.png":"5gy5h","./img/person-3.png":"fxjfz","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh"}],"1oVBG":[function(require,module,exports) {
+module.exports = require("b624ab8db34ed69f").getBundleURL("gnRNX") + "bank-open.f23df08a.png" + "?" + Date.now();
 
-},{"1024d9e335ba5425":"fjtJG"}],"fjtJG":[function(require,module,exports) {
+},{"b624ab8db34ed69f":"fjtJG"}],"fjtJG":[function(require,module,exports) {
 "use strict";
 var bundleURL = {};
 function getBundleURLCached(id) {
@@ -6875,7 +6907,16 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"lOgXO":[function(require,module,exports) {
+},{}],"hdolQ":[function(require,module,exports) {
+module.exports = require("ea0b7798be08f543").getBundleURL("gnRNX") + "bank-closed.6785d90a.png" + "?" + Date.now();
+
+},{"ea0b7798be08f543":"fjtJG"}],"5R5id":[function(require,module,exports) {
+module.exports = require("e38c9fbe8f7d6e62").getBundleURL("gnRNX") + "clock.96a4bee3.png" + "?" + Date.now();
+
+},{"e38c9fbe8f7d6e62":"fjtJG"}],"5eDc2":[function(require,module,exports) {
+module.exports = require("1024d9e335ba5425").getBundleURL("gnRNX") + "guard-1.0ec892b3.png" + "?" + Date.now();
+
+},{"1024d9e335ba5425":"fjtJG"}],"lOgXO":[function(require,module,exports) {
 module.exports = require("d19bde7dbb95fe35").getBundleURL("gnRNX") + "car-1.ce95ed13.png" + "?" + Date.now();
 
 },{"d19bde7dbb95fe35":"fjtJG"}],"fwz6H":[function(require,module,exports) {
@@ -6896,16 +6937,7 @@ module.exports = require("96729397a4a13b46").getBundleURL("gnRNX") + "person-2.8
 },{"96729397a4a13b46":"fjtJG"}],"fxjfz":[function(require,module,exports) {
 module.exports = require("482fda3eeba12ff1").getBundleURL("gnRNX") + "person-3.a14fb012.png" + "?" + Date.now();
 
-},{"482fda3eeba12ff1":"fjtJG"}],"5R5id":[function(require,module,exports) {
-module.exports = require("e38c9fbe8f7d6e62").getBundleURL("gnRNX") + "clock.96a4bee3.png" + "?" + Date.now();
-
-},{"e38c9fbe8f7d6e62":"fjtJG"}],"1oVBG":[function(require,module,exports) {
-module.exports = require("b624ab8db34ed69f").getBundleURL("gnRNX") + "bank-open.f23df08a.png" + "?" + Date.now();
-
-},{"b624ab8db34ed69f":"fjtJG"}],"hdolQ":[function(require,module,exports) {
-module.exports = require("ea0b7798be08f543").getBundleURL("gnRNX") + "bank-closed.6785d90a.png" + "?" + Date.now();
-
-},{"ea0b7798be08f543":"fjtJG"}],"jtCLN":[function(require,module,exports) {
+},{"482fda3eeba12ff1":"fjtJG"}],"jtCLN":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "TIME_SCALE", ()=>TIME_SCALE);
@@ -6926,10 +6958,10 @@ parcelHelpers.export(exports, "simulationTime", ()=>simulationTime);
 var _riza = require("riza");
 var _random = require("./random");
 var _utils = require("./utils");
-const TIME_SCALE = 144; // 12 horas en 5 minutos
+const TIME_SCALE = 360; // 12 horas en 5 minutos
 const PIXELS_PER_METER = 40 / 1.5; // 40 pixels = 1.5 m
 const OUTSIDE_CAPACITY = 25;
-const INSIDE_CAPACITY = 5;
+const INSIDE_CAPACITY = 18;
 const bank_opening_time = (0, _random.randValue)((0, _utils.makeTime)(9, 0), (0, _utils.makeTime)(9, 30)); // 09:00am a 09:30am
 const bank_closing_time = (0, _random.randValue)((0, _utils.makeTime)(17, 0), (0, _utils.makeTime)(17, 30)); // 05:00pm a 05:30pm
 const person_arrival_delay = (0, _random.randValue)((0, _utils.makeTime)(0, 2.4), (0, _utils.makeTime)(0, 7.5)); // 8 a 25 personas por hora
@@ -6946,7 +6978,7 @@ function simulationTime(value = null) {
     return currentTime;
 }
 
-},{"riza":"cCAh0","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh","./random":"1fE0k","./utils":"en4he"}],"1fE0k":[function(require,module,exports) {
+},{"riza":"cCAh0","./random":"1fE0k","./utils":"en4he","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh"}],"1fE0k":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 /**
@@ -7149,7 +7181,7 @@ exports.default = (ctx, parent, x, y)=>{
     return obj;
 };
 
-},{"riza":"cCAh0","./images":"lLWtd","./utils":"en4he","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh","./random":"1fE0k","./config":"jtCLN"}],"1KVU2":[function(require,module,exports) {
+},{"riza":"cCAh0","./config":"jtCLN","./images":"lLWtd","./random":"1fE0k","./utils":"en4he","@parcel/transformer-js/src/esmodule-helpers.js":"fF8Uh"}],"1KVU2":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _riza = require("riza");

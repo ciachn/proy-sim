@@ -59,16 +59,23 @@ function prepararSimulacion (ctx)
     const statEsperaInternaT = signal(0);
     const statEsperaInternaN = signal(1);
 
+    const statAfuera = signal(0);
+    const statAdentro = signal(0);
+
     let contadorPersonas = <span style="position:absolute; left:16px; top:20px; color:#c0c;">Total Clientes: <b>{statPersonas}</b></span>;
     document.body.append(contadorPersonas);
     let contadorFallos = <span style="position:absolute; left:16px; top:40px; color:#c0c;">Total Fallos: <b>{statFallos}</b></span>;
     document.body.append(contadorFallos);
     let contadorExitos = <span style="position:absolute; left:16px; top:60px; color:#c0c;">Total Exitos: <b>{statExitos}</b></span>;
     document.body.append(contadorExitos);
-    let contadorEsperaExternaT = <span style="position:absolute; left:16px; top:100px; color:#c0c;">Prom. Espera Entrar: <b>{expr([statEsperaExternaT, statEsperaExternaN], (t, n) => formatTime(t/n))}</b></span>;
+    let contadorEsperaExternaT = <span style="position:absolute; left:16px; top:90px; color:#c0c;">Prom. Espera Entrar: <b>{expr([statEsperaExternaT, statEsperaExternaN], (t, n) => formatTime(t/n))}</b></span>;
     document.body.append(contadorEsperaExternaT);
-    let contadorEsperaInternaT = <span style="position:absolute; left:16px; top:120px; color:#c0c;">Prom. Espera Salir: <b>{expr([statEsperaInternaT, statEsperaInternaN], (t, n) => formatTime(t/n))}</b></span>;
+    let contadorEsperaInternaT = <span style="position:absolute; left:16px; top:110px; color:#c0c;">Prom. Espera Salir: <b>{expr([statEsperaInternaT, statEsperaInternaN], (t, n) => formatTime(t/n))}</b></span>;
     document.body.append(contadorEsperaInternaT);
+    let contadorAfuera = <span style="position:absolute; left:16px; top:140px; color:#c0c;">Clientes Afuera: <b>{statAfuera}</b></span>;
+    document.body.append(contadorAfuera);
+    let contadorAdentro = <span style="position:absolute; left:16px; top:160px; color:#c0c;">Clientes Adentro: <b>{statAdentro}</b></span>;
+    document.body.append(contadorAdentro);
 
     ctx.log.write(C_DEBUG, 'Inicio de simulación');
 
@@ -121,6 +128,9 @@ function prepararSimulacion (ctx)
     });
 
     ctx.interval(1, () => {
+        statAfuera.value = colaExterna.length - 1;
+        statAdentro.value = colaInterna.length;
+
         if (bancoCerrado.visible == 2 && colaExterna.length == 1 && colaInterna.length == 0) {
             ctx.log.write(C_DEBUG, 'Fin de simulación');
             ctx.stop();
@@ -230,6 +240,7 @@ function prepararSimulacion (ctx)
                     persona.remove();
                 });
                 i--;
+                continue;
             }
 
             // procesamiento completado
@@ -246,6 +257,7 @@ function prepararSimulacion (ctx)
                     persona.remove();
                 });
                 i--;
+                continue;
             }
         }
     });
